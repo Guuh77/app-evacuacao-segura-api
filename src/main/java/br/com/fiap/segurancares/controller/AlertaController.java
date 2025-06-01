@@ -47,8 +47,8 @@ public class AlertaController {
     @Path("/{id}")
     @Transactional
     public Response updateAlerta(@PathParam("id") Long id, AlertaEntity alertaEntity) {
-        AlertaEntity alertaAtualizado = alertaService.updateAlerta(id, alertaEntity);
-        return Response.ok(alertaAtualizado).build();
+        alertaService.updateAlerta(id, alertaEntity); // Chama o serviço para atualizar
+        return Response.ok().build(); // Retorna apenas 200 OK, sem corpo
     }
 
     @DELETE
