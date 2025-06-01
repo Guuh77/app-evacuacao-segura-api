@@ -1,78 +1,53 @@
-# app-evacuacao-segura-api
+# Aplicativo de Evacuação e Rotas Seguras - API Back-end 🚨
 
-This project uses Quarkus, the Supersonic Subatomic Java Framework.
+Bem-vindo ao repositório da API Back-end do nosso Aplicativo de Evacuação e Rotas Seguras. Esta API é o componente central da nossa solução, responsável pelo gerenciamento de dados, lógica de negócios e por servir as informações para a interface do usuário.
 
-If you want to learn more about Quarkus, please visit its website: <https://quarkus.io/>.
+## Desenvolvedores
 
-## Running the application in dev mode
+* **Gustavo** - RM: 561055
+* **Arthur** - RM: 560820
 
-You can run your application in dev mode that enables live coding using:
+## Sobre Este Back-end
 
-```shell script
-./mvnw quarkus:dev
-```
+No desenvolvimento desta API, nosso foco foi criar um serviço robusto, eficiente e escalável para o Aplicativo de Evacuação e Rotas Seguras. Utilizamos o framework Quarkus para otimizar a performance e o consumo de recursos, integrando com um banco de dados Oracle para persistência dos dados. A API gerencia informações vitais como alertas, áreas de risco, abrigos, ocorrências, campanhas e relatos de usuários.
 
-> **_NOTE:_**  Quarkus now ships with a Dev UI, which is available in dev mode only at <http://localhost:8080/q/dev/>.
+## Funcionalidades da API
 
-## Packaging and running the application
+* Gerenciamento completo (CRUD) para as entidades: Usuários, Alertas, Áreas de Risco, Abrigos Seguros, Ocorrências, Campanhas e Relatos.
+* Exposição de endpoints RESTful seguindo as melhores práticas para consumo pelo front-end.
+* Implementação da lógica de negócios e validações pertinentes a cada funcionalidade.
 
-The application can be packaged using:
+## Arquitetura e Implementação do Back-end
 
-```shell script
-./mvnw package
-```
+Para o desenvolvimento do nosso back-end, adotamos uma arquitetura em camadas com Java e Quarkus, visando organização e manutenibilidade[cite: 8, 32]:
 
-It produces the `quarkus-run.jar` file in the `target/quarkus-app/` directory.
-Be aware that it’s not an _über-jar_ as the dependencies are copied into the `target/quarkus-app/lib/` directory.
+* **Entidades (`entity`):** Realizamos o mapeamento das tabelas do banco de dados Oracle utilizando JPA (Java Persistence API)[cite: 32, 33]. Cada classe nesta camada representa uma tabela e suas colunas[cite: 33, 34, 49].
+* **Repositórios (`repository`):** Para o acesso aos dados, utilizamos o padrão Repository com o Hibernate ORM with Panache do Quarkus[cite: 2, 35, 36]. Isso simplifica as operações de banco de dados (consultas, inserts, deletes)[cite: 35, 37, 55].
+* **Serviços (`service`):** Esta camada (também conhecida como Camada BO - Business Object) contém a lógica de negócios da nossa aplicação[cite: 32, 39]. Os serviços orquestram as operações, chamando os repositórios e aplicando regras de negócio antes de expor os dados para os controllers[cite: 39, 40, 41].
+* **Controllers (`controller` / Resource):** São responsáveis por receber as requisições HTTP (REST), validar dados iniciais e invocar os métodos apropriados na camada de serviço[cite: 32, 42, 43, 44]. Utilizamos JAX-RS para definir os endpoints, e Jackson para a serialização/desserialização de JSON[cite: 4, 26].
 
-The application is now runnable using `java -jar target/quarkus-app/quarkus-run.jar`.
+### Configuração e Conexão com Banco de Dados
 
-If you want to build an _über-jar_, execute the following command:
+* As configurações da aplicação, incluindo a conexão com o banco de dados Oracle da FIAP, são gerenciadas no arquivo `src/main/resources/application.properties`[cite: 8, 12, 13, 30].
+* Para o ambiente de produção no Railway, as credenciais do banco (`DB_USER`, `DB_PASS`, `DB_URL`) são lidas de variáveis de ambiente, conforme configurado no `application.properties` (`quarkus.datasource.username=${DB_USER}`, etc.)[cite: 78].
+* A propriedade `quarkus.hibernate-orm.database.generation=update` foi utilizada durante o desenvolvimento para auxiliar na criação/atualização do schema do banco com base nas entidades[cite: 31].
 
-```shell script
-./mvnw package -Dquarkus.package.jar.type=uber-jar
-```
+### Ambiente de Desenvolvimento e Execução Local
 
-The application, packaged as an _über-jar_, is now runnable using `java -jar target/*-runner.jar`.
+* Para o desenvolvimento, utilizamos JDK 21 e Maven (através do Maven Wrapper `mvnw` [cite: 9, 19]).
+* A API é iniciada localmente com o comando `./mvnw quarkus:dev` e fica disponível, por padrão, em `http://localhost:8080`[cite: 27].
 
-## Creating a native executable
+## Tecnologias Chave do Back-end
 
-You can create a native executable using:
+* Java 21, Quarkus, Maven
+* Hibernate ORM with Panache, JPA
+* JAX-RS, RESTful Webservices, Jackson
+* Oracle Database
 
-```shell script
-./mvnw package -Dnative
-```
+## Deployment (API na Nuvem)
 
-Or, if you don't have GraalVM installed, you can run the native executable build in a container using:
+* A API foi conteinerizada utilizando um `Dockerfile`[cite: 75, 76].
+* O deploy foi realizado na plataforma **Railway**.
+* **URL da API em Produção:** `https://app-evacuacao-segura-api-production.up.railway.app/`
 
-```shell script
-./mvnw package -Dnative -Dquarkus.native.container-build=true
-```
-
-You can then execute your native executable with: `./target/app-evacuacao-segura-api-1.0.0-SNAPSHOT-runner`
-
-If you want to learn more about building native executables, please consult <https://quarkus.io/guides/maven-tooling>.
-
-## Related Guides
-
-- REST ([guide](https://quarkus.io/guides/rest)): A Jakarta REST implementation utilizing build time processing and Vert.x. This extension is not compatible with the quarkus-resteasy extension, or any of the extensions that depend on it.
-- REST Jackson ([guide](https://quarkus.io/guides/rest#json-serialisation)): Jackson serialization support for Quarkus REST. This extension is not compatible with the quarkus-resteasy extension, or any of the extensions that depend on it
-- Hibernate ORM with Panache ([guide](https://quarkus.io/guides/hibernate-orm-panache)): Simplify your persistence code for Hibernate ORM via the active record or the repository pattern
-- JDBC Driver - Oracle ([guide](https://quarkus.io/guides/datasource)): Connect to the Oracle database via JDBC
-
-## Provided Code
-
-### Hibernate ORM
-
-Create your first JPA entity
-
-[Related guide section...](https://quarkus.io/guides/hibernate-orm)
-
-[Related Hibernate with Panache section...](https://quarkus.io/guides/hibernate-orm-panache)
-
-
-### REST
-
-Easily start your REST Web Services
-
-[Related guide section...](https://quarkus.io/guides/getting-started-reactive#reactive-jax-rs-resources)
+---
