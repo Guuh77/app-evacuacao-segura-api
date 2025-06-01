@@ -4,7 +4,7 @@ FROM eclipse-temurin:21-jdk-alpine
 WORKDIR /app
 
 
-COPY app-evacuacao-segura-api .
+COPY . .
 
 
 RUN chmod +x ./mvnw
