@@ -14,7 +14,7 @@ public class RelatoEntity {
     private Long idRelato;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_usuario_autor", nullable = false)
+    @JoinColumn(name = "id_usuario_autor", nullable = true) // Agora permite nulo
     private UsuarioEntity usuarioAutor;
 
     @ManyToOne(fetch = FetchType.LAZY)
