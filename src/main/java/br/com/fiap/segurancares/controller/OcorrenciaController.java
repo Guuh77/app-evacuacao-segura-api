@@ -47,8 +47,8 @@ public class OcorrenciaController {
     @Path("/{id}")
     @Transactional
     public Response updateOcorrencia(@PathParam("id") Long id, OcorrenciaEntity ocorrenciaEntity) {
-        OcorrenciaEntity ocorrenciaAtualizada = ocorrenciaService.updateOcorrencia(id, ocorrenciaEntity);
-        return Response.ok(ocorrenciaAtualizada).build();
+        ocorrenciaService.updateOcorrencia(id, ocorrenciaEntity);
+        return Response.ok().build();
     }
 
     @DELETE
