@@ -39,18 +39,24 @@ public class OcorrenciaService {
             UsuarioEntity usuario = usuarioRepository.findByIdOptional(ocorrenciaEntity.getUsuarioReportou().getIdUsuario())
                     .orElseThrow(() -> new ResourceNotFoundException("Usuário (reportou) não encontrado com id: " + ocorrenciaEntity.getUsuarioReportou().getIdUsuario()));
             ocorrenciaEntity.setUsuarioReportou(usuario);
+        } else {
+            ocorrenciaEntity.setUsuarioReportou(null);
         }
 
         if (ocorrenciaEntity.getAlertaRelacionado() != null && ocorrenciaEntity.getAlertaRelacionado().getIdAlerta() != null) {
             AlertaEntity alerta = alertaRepository.findByIdOptional(ocorrenciaEntity.getAlertaRelacionado().getIdAlerta())
                     .orElseThrow(() -> new ResourceNotFoundException("Alerta relacionado não encontrado com id: " + ocorrenciaEntity.getAlertaRelacionado().getIdAlerta()));
             ocorrenciaEntity.setAlertaRelacionado(alerta);
+        } else {
+            ocorrenciaEntity.setAlertaRelacionado(null);
         }
 
         if (ocorrenciaEntity.getAreaRiscoAfetada() != null && ocorrenciaEntity.getAreaRiscoAfetada().getIdAreaRisco() != null) {
             AreaDeRiscoEntity area = areaDeRiscoRepository.findByIdOptional(ocorrenciaEntity.getAreaRiscoAfetada().getIdAreaRisco())
                     .orElseThrow(() -> new ResourceNotFoundException("Área de Risco afetada não encontrada com id: " + ocorrenciaEntity.getAreaRiscoAfetada().getIdAreaRisco()));
             ocorrenciaEntity.setAreaRiscoAfetada(area);
+        } else {
+            ocorrenciaEntity.setAreaRiscoAfetada(null);
         }
 
         ocorrenciaRepository.persist(ocorrenciaEntity);
@@ -75,10 +81,8 @@ public class OcorrenciaService {
         ocorrenciaExistente.setTipoOcorrencia(ocorrenciaAtualizada.getTipoOcorrencia());
         ocorrenciaExistente.setLatitudeOcorrencia(ocorrenciaAtualizada.getLatitudeOcorrencia());
         ocorrenciaExistente.setLongitudeOcorrencia(ocorrenciaAtualizada.getLongitudeOcorrencia());
-        ocorrenciaExistente.setDataHoraOcorrencia(ocorrenciaAtualizada.getDataHoraOcorrencia());
         ocorrenciaExistente.setStatusOcorrencia(ocorrenciaAtualizada.getStatusOcorrencia());
         ocorrenciaExistente.setImpactoEstimado(ocorrenciaAtualizada.getImpactoEstimado());
-
         if (ocorrenciaAtualizada.getUsuarioReportou() != null && ocorrenciaAtualizada.getUsuarioReportou().getIdUsuario() != null) {
             UsuarioEntity usuario = usuarioRepository.findByIdOptional(ocorrenciaAtualizada.getUsuarioReportou().getIdUsuario())
                     .orElseThrow(() -> new ResourceNotFoundException("Usuário (reportou) não encontrado com id: " + ocorrenciaAtualizada.getUsuarioReportou().getIdUsuario()));
@@ -91,8 +95,7 @@ public class OcorrenciaService {
             AlertaEntity alerta = alertaRepository.findByIdOptional(ocorrenciaAtualizada.getAlertaRelacionado().getIdAlerta())
                     .orElseThrow(() -> new ResourceNotFoundException("Alerta relacionado não encontrado com id: " + ocorrenciaAtualizada.getAlertaRelacionado().getIdAlerta()));
             ocorrenciaExistente.setAlertaRelacionado(alerta);
-        }
-        else {
+        } else {
             ocorrenciaExistente.setAlertaRelacionado(null);
         }
 
