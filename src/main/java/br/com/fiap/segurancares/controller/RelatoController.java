@@ -47,8 +47,8 @@ public class RelatoController {
     @Path("/{id}")
     @Transactional
     public Response updateRelato(@PathParam("id") Long id, RelatoEntity relatoEntity) {
-        RelatoEntity relatoAtualizado = relatoService.updateRelato(id, relatoEntity);
-        return Response.ok(relatoAtualizado).build();
+        relatoService.updateRelato(id, relatoEntity);
+        return Response.ok().build();
     }
 
     @DELETE
