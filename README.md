@@ -1,4 +1,4 @@
-# Aplicativo de Evacuação e Rotas Seguras - API Back-end 🚨
+# Aplicativo de Evacuação e Rotas Seguras - API Back-end
 
 Bem-vindo ao repositório da API Back-end do nosso Aplicativo de Evacuação e Rotas Seguras. Esta API é o componente central da nossa solução, responsável pelo gerenciamento de dados, lógica de negócios e por servir as informações para a interface do usuário.
 
